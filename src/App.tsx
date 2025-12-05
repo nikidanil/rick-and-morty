@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import { MainLayout } from './components';
 import { publicRoute } from './constants';
 import { EpisodePage, EpisodesPage, HeroesPage, HeroPage, HomePage, LocationPage, LocationsPage } from './pages';
-import './App.css';
 
 export const App = () => {
 	return (

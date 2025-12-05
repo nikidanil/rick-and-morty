@@ -1,0 +1,52 @@
+.header {
+	background-color: #313233;
+	transition: background-color 0.3s;
+	color: white;
+	padding: 0 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+	&:hover {
+		background-color: #373839;
+	}
+}
+
+.nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 64px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.navCategory {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.logo {
+	color: white;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+	font-size: 1.5rem;
+	font-weight: bold;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+}
+
+.navLink {
+	color: white;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+}
