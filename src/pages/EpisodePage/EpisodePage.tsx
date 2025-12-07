@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import style from './EpisodePage.module.css';
+import { InfoCard } from '../../components/common';
 
 interface Episode {
 	id: number;
@@ -32,26 +32,14 @@ export const EpisodePage = () => {
 		<div>
 			<h1>{episodeData?.name}</h1>
 
-			<div className={style.episodeContent}>
-				<div className={style.episodeDetails}>
-					<h2>Информация о серии</h2>
-
-					<div className={style.episodeFeatures}>
-						<div className={style.feature}>
-							<span className={style.label}>Название:</span>
-							<span className={style.value}>{episodeData?.name}</span>
-						</div>
-						<div className={style.feature}>
-							<span className={style.label}>Эпизод:</span>
-							<span className={style.value}>{episodeData?.episode}</span>
-						</div>
-						<div className={style.feature}>
-							<span className={style.label}>Дата выпуска:</span>
-							<span className={style.value}>{episodeData?.air_date}</span>
-						</div>
-					</div>
-				</div>
-			</div>
+			<InfoCard
+				title='Информация о серии'
+				infoValues={[
+					['Название', episodeData?.name],
+					['Эпизод', episodeData?.episode],
+					['Дата Выпуска', episodeData?.air_date],
+				]}
+			/>
 		</div>
 	);
 };
