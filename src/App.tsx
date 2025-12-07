@@ -1,7 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
 import { MainLayout } from './components';
 import { publicRoute } from './constants';
-import { EpisodePage, EpisodesPage, HeroesPage, HeroPage, HomePage, LocationPage, LocationsPage } from './pages';
+import {
+	EpisodePage,
+	EpisodesPage,
+	HeroesPage,
+	HeroPage,
+	HomePage,
+	LocationPage,
+	LocationsPage,
+	NotFoundPage,
+} from './pages';
 
 export const App = () => {
 	return (
@@ -17,6 +26,8 @@ export const App = () => {
 
 				<Route path={publicRoute.episodes} element={<EpisodesPage />} />
 				<Route path={`${publicRoute.episodes}/:id`} element={<EpisodePage />} />
+
+				<Route path='*' element={<NotFoundPage />} />
 			</Route>
 		</Routes>
 	);

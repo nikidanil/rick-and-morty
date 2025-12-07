@@ -5,3 +5,4 @@ export * from './HeroesPage';
 export * from './HomePage';
 export * from './LocationPage';
 export * from './LocationsPage';
+export * from './NotFoundPage';
