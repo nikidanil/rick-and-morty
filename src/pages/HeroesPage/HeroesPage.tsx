@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import style from './HeroesPage.module.css';
 import { HeroCard } from './components';
 
 interface Hero {
@@ -33,7 +32,7 @@ export const HeroesPage = () => {
 	return (
 		<div>
 			<h1>Персонажи</h1>
-			<div className={style.heroesGrid}>
+			<div className='grid-content'>
 				{heroes.map((hero) => (
 					<HeroCard key={hero.id} id={hero.id} name={hero.name} image={hero.image} />
 				))}

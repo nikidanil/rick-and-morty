@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import style from './EpisodesPage.module.css';
 import { EpisodeCard } from './components';
 
 interface Episode {
@@ -30,7 +29,7 @@ export const EpisodesPage = () => {
 	return (
 		<div>
 			<h1>Серии</h1>
-			<div className={style.episodesGrid}>
+			<div className='grid-content'>
 				{episodes.map((ep) => (
 					<EpisodeCard key={ep.id} id={ep.id} episode={ep.episode} />
 				))}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { LocationCard } from './components';
-import style from './LocationsPage.module.css';
 
 interface Location {
 	id: number;
@@ -28,13 +27,13 @@ export const LocationsPage = () => {
 	}, []);
 
 	return (
-		<div>
+		<>
 			<h1>Локации</h1>
-			<div className={style.locationsGrid}>
+			<div className='grid-content'>
 				{locations.map((location) => (
 					<LocationCard key={location.id} id={location.id} name={location.name} />
 				))}
 			</div>
-		</div>
+		</>
 	);
 };

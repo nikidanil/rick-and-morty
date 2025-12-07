@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import style from './HeroPage.module.css';
+import { InfoCard, PhotoCard } from '../../components/common';
 
 interface Hero {
 	id: number;
@@ -32,37 +32,22 @@ export const HeroPage = () => {
 	}, [id]);
 
 	return (
-		<div>
+		<>
 			<h1>{heroData?.name}</h1>
 
-			<div className={style.heroContent}>
-				<div className={style.heroPhoto}>
-					<img src={heroData?.image} alt={heroData?.name} />
-				</div>
+			<div className='info-content'>
+				{heroData && <PhotoCard src={heroData.image} alt={heroData.name} />}
 
-				<div className={style.heroDetails}>
-					<h2>Информация о персонаже</h2>
-
-					<div className={style.heroFeatures}>
-						<div className={style.feature}>
-							<span className={style.label}>Статус:</span>
-							<span className={style.value}>{heroData?.status}</span>
-						</div>
-						<div className={style.feature}>
-							<span className={style.label}>Вид:</span>
-							<span className={style.value}>{heroData?.species}</span>
-						</div>
-						<div className={style.feature}>
-							<span className={style.label}>Тип:</span>
-							<span className={style.value}>{heroData?.type}</span>
-						</div>
-						<div className={style.feature}>
-							<span className={style.label}>Гендер:</span>
-							<span className={style.value}>{heroData?.gender}</span>
-						</div>
-					</div>
-				</div>
+				<InfoCard
+					title='Информация о персонаже'
+					infoValues={[
+						['Статус', heroData?.status],
+						['Вид', heroData?.species],
+						['Тип', heroData?.type],
+						['Гендер', heroData?.gender],
+					]}
+				/>
 			</div>
-		</div>
+		</>
 	);
 };

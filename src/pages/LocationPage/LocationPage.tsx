@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import style from './LocationPage.module.css';
+import { InfoCard } from '../../components/common';
 
 interface Location {
 	id: number;
@@ -29,25 +29,18 @@ export const LocationPage = () => {
 	}, [id]);
 
 	return (
-		<div>
+		<>
 			<h1>{locationData?.name}</h1>
 
-			<div className={style.locationContent}>
-				<div className={style.locationDetails}>
-					<h2>Информация о локации</h2>
-
-					<div className={style.locationFeatures}>
-						<div className={style.feature}>
-							<span className={style.label}>Тип:</span>
-							<span className={style.value}>{locationData?.type}</span>
-						</div>
-						<div className={style.feature}>
-							<span className={style.label}>Измерение:</span>
-							<span className={style.value}>{locationData?.dimension}</span>
-						</div>
-					</div>
-				</div>
+			<div className='info-content'>
+				<InfoCard
+					title='Информация о локации'
+					infoValues={[
+						['Тип', locationData?.type],
+						['Измерение', locationData?.dimension],
+					]}
+				/>
 			</div>
-		</div>
+		</>
 	);
 };

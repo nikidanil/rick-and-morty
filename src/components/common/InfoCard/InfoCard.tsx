@@ -48,18 +48,16 @@ type InfoCardProps = {
  */
 export const InfoCard = ({ title, infoValues }: InfoCardProps) => {
 	return (
-		<div className={style.content}>
-			<div className={style.details}>
-				<h2>{title}</h2>
+		<div className={style.details}>
+			<h2>{title}</h2>
 
-				<div className={style.features}>
-					{infoValues.map((info) => (
-						<div key={info[1] || info[0]} className={style.feature}>
-							<span className={style.label}>{info[0]}:</span>
-							<span className={style.value}>{info[1]}</span>
-						</div>
-					))}
-				</div>
+			<div className={style.features}>
+				{infoValues.map((info) => (
+					<div key={info[1] || info[0]} className={style.feature}>
+						<span className={style.label}>{info[0]}:</span>
+						<span className={style.value}>{info[1]}</span>
+					</div>
+				))}
 			</div>
 		</div>
 	);
