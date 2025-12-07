@@ -7,7 +7,6 @@ export const MainLayout = () => {
 		<>
 			<Header />
 			<main className={style.container}>
-				Main Layout
 				<Outlet />
 			</main>
 		</>
