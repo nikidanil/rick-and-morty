@@ -1,0 +1,58 @@
+.homeContainer {
+	padding: 2rem;
+	max-width: 800px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.header p {
+	font-size: 1.2rem;
+	color: #a4a4a4;
+	margin-bottom: 2rem;
+}
+
+.actionsList {
+	list-style: none;
+	padding: 0;
+	margin: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+}
+
+.link {
+	background-color: #313233;
+	display: inline-block;
+	width: 300px;
+	color: white;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+}
+
+.quote {
+	margin-top: 2rem;
+	font-style: italic;
+	color: #444;
+	border-top: 1px dashed #ccc;
+	padding-top: 1.5rem;
+}
+
+blockquote {
+	color: aliceblue;
+	margin: 0;
+	font-size: 1.2rem;
+}
+
+blockquote footer {
+	text-align: right;
+	font-size: 1rem;
+	margin-top: 0.5rem;
+	color: #9e9e9e;
+}

@@ -29,17 +29,19 @@ export const EpisodePage = () => {
 	}, [id]);
 
 	return (
-		<div>
+		<>
 			<h1>{episodeData?.name}</h1>
 
-			<InfoCard
-				title='Информация о серии'
-				infoValues={[
-					['Название', episodeData?.name],
-					['Эпизод', episodeData?.episode],
-					['Дата Выпуска', episodeData?.air_date],
-				]}
-			/>
-		</div>
+			<div className='info-content'>
+				<InfoCard
+					title='Информация о серии'
+					infoValues={[
+						['Название', episodeData?.name],
+						['Эпизод', episodeData?.episode],
+						['Дата Выпуска', episodeData?.air_date],
+					]}
+				/>
+			</div>
+		</>
 	);
 };
