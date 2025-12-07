@@ -11,7 +11,7 @@ type HeroCardProps = {
 export const HeroCard = ({ id, name, image }: HeroCardProps) => {
 	return (
 		<div className={style.container}>
-			<Link to={`${publicRoute.heroes}/${id}`}>
+			<Link to={publicRoute.hero(`${id}`)}>
 				<img src={image} alt={name} className={style.heroImage} />
 				<div className={style.heroInfo}>
 					<h3>{name}</h3>

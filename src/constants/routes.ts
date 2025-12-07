@@ -1,9 +1,9 @@
 export const publicRoute = {
 	home: '/',
 	heroes: '/heroes',
-	hero: ':id',
+	hero: (id: string): string => `/heroes/${id}`,
 	locations: '/locations',
-	location: ':id',
+	location: (id: string): string => `/locations/${id}`,
 	episodes: '/episodes',
-	episode: ':id',
+	episode: (id: string): string => `/episodes/${id}`,
 };

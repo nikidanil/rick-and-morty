@@ -8,15 +8,15 @@ export const App = () => {
 		<Routes>
 			<Route path={publicRoute.home} element={<MainLayout />}>
 				<Route index element={<HomePage />} />
-				<Route path={publicRoute.heroes} element={<HeroesPage />}>
-					<Route path={publicRoute.hero} element={<HeroPage />} />
-				</Route>
-				<Route path={publicRoute.locations} element={<LocationsPage />}>
-					<Route path={publicRoute.location} element={<LocationPage />} />
-				</Route>
-				<Route path={publicRoute.episodes} element={<EpisodesPage />}>
-					<Route path={publicRoute.episode} element={<EpisodePage />} />
-				</Route>
+
+				<Route path={publicRoute.heroes} element={<HeroesPage />} />
+				<Route path={`${publicRoute.heroes}/:id`} element={<HeroPage />} />
+
+				<Route path={publicRoute.locations} element={<LocationsPage />} />
+				<Route path={`${publicRoute.locations}/:id`} element={<LocationPage />} />
+
+				<Route path={publicRoute.episodes} element={<EpisodesPage />} />
+				<Route path={`${publicRoute.episodes}/:id`} element={<EpisodePage />} />
 			</Route>
 		</Routes>
 	);
