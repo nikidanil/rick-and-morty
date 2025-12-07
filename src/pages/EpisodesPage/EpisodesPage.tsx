@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import style from './Episodes.module.css';
+import style from './EpisodesPage.module.css';
 import { EpisodeCard } from './components';
 
 interface Episode {

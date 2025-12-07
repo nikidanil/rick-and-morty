@@ -1,0 +1,32 @@
+.episodeContent {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+}
+
+.episodeDetails {
+	h2 {
+		margin-bottom: 20px;
+	}
+}
+
+.episodeFeatures {
+	background-color: #313233;
+	padding: 20px;
+	border-radius: 8px;
+	margin-bottom: 30px;
+}
+
+.feature {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.label {
+	font-weight: 500;
+}
+
+.value {
+	font-weight: 600;
+}
