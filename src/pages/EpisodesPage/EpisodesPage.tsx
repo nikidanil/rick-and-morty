@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { EpisodeCard } from './components';
+import { useSortParams } from '../../hooks';
+import { SortPanel } from '../../components/SortPanel';
 
 interface Episode {
 	id: number;
@@ -11,6 +13,7 @@ interface Episode {
 
 export const EpisodesPage = () => {
 	const [episodes, setEpisodes] = useState<Episode[]>([]);
+	const { sortOrder, setSortOrder } = useSortParams();
 
 	useEffect(() => {
 		const fetchHeroes = async () => {
@@ -26,11 +29,19 @@ export const EpisodesPage = () => {
 		fetchHeroes();
 	}, []);
 
+	const sortedEpisodes = [...episodes].sort((a, b) => {
+		const dateA = new Date(a.created).getTime();
+		const dateB = new Date(b.created).getTime();
+		return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+	});
+
 	return (
 		<div>
 			<h1>Серии</h1>
+			<SortPanel label='Сортировать по дате создания' sortOrder={sortOrder} setSortOrder={setSortOrder} />
+
 			<div className='grid-content'>
-				{episodes.map((ep) => (
+				{sortedEpisodes.map((ep) => (
 					<EpisodeCard key={ep.id} id={ep.id} episode={ep.episode} />
 				))}
 			</div>
