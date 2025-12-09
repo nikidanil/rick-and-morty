@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HeroCard } from './components';
-
+import { useSortParams } from '../../hooks';
+import { SortPanel } from '../../components/SortPanel';
 interface Hero {
 	id: number;
 	name: string;
@@ -14,6 +15,7 @@ interface Hero {
 
 export const HeroesPage = () => {
 	const [heroes, setHeroes] = useState<Hero[]>([]);
+	const { sortOrder, setSortOrder } = useSortParams();
 
 	useEffect(() => {
 		const fetchHeroes = async () => {
@@ -29,11 +31,19 @@ export const HeroesPage = () => {
 		fetchHeroes();
 	}, []);
 
+	const sortedHeroes = [...heroes].sort((a, b) => {
+		const dateA = new Date(a.created).getTime();
+		const dateB = new Date(b.created).getTime();
+		return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+	});
+
 	return (
 		<div>
 			<h1>Персонажи</h1>
+			<SortPanel label='Сортировать по дате создания' sortOrder={sortOrder} setSortOrder={setSortOrder} />
+
 			<div className='grid-content'>
-				{heroes.map((hero) => (
+				{sortedHeroes.map((hero) => (
 					<HeroCard key={hero.id} id={hero.id} name={hero.name} image={hero.image} />
 				))}
 			</div>
