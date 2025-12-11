@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import style from './Login.module.css';
 import { useAuth } from '../../hooks';
-import { replace, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 	const [login, setLogin] = useState('');
