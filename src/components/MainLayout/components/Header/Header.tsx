@@ -20,6 +20,9 @@ export const Header = () => {
 					<NavLink className={style.navLink} to={publicRoute.episodes} end>
 						Эпизоды
 					</NavLink>
+					<NavLink className={style.navLink} to={publicRoute.login} end>
+						Вход
+					</NavLink>
 				</div>
 			</nav>
 		</header>

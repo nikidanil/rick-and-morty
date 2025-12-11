@@ -9,6 +9,7 @@ import {
 	HomePage,
 	LocationPage,
 	LocationsPage,
+	Login,
 	NotFoundPage,
 } from './pages';
 
@@ -17,6 +18,7 @@ export const App = () => {
 		<Routes>
 			<Route path={publicRoute.home} element={<MainLayout />}>
 				<Route index element={<HomePage />} />
+				<Route path={publicRoute.login} element={<Login />} />
 
 				<Route path={publicRoute.heroes} element={<HeroesPage />} />
 				<Route path={`${publicRoute.heroes}/:id`} element={<HeroPage />} />
