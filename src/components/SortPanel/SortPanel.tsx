@@ -9,8 +9,8 @@ type SortPanelProps = {
 };
 
 export const SortPanel = ({ label, sortOrder, setSortOrder }: SortPanelProps) => {
-	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const value = e.target.value;
+	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const value = event.target.value;
 		if (value === 'asc' || value === 'desc') {
 			setSortOrder(value);
 		}

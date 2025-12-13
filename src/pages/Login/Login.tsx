@@ -11,12 +11,12 @@ export const Login = () => {
 
 	const { from } = location.state || { from: { pathname: '/' } };
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setLogin(e.target.value);
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setLogin(event.target.value);
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 
 		auth?.signIn(login, () => {
 			navigate(from, {
