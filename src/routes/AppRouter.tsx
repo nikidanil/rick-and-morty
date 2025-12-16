@@ -1,31 +1,32 @@
 import { Route, Routes } from 'react-router-dom';
-import { publicRoute } from '../constants';
 import { MainLayout } from '../layouts';
 import { PrivateRoute } from '../hoc';
 import {
-	EpisodePage,
-	EpisodesPage,
-	HeroesPage,
-	HeroPage,
-	HomePage,
-	LocationPage,
-	LocationsPage,
-	Login,
-	NotFoundPage,
-} from '../pages';
+	LazyHomePage,
+	LazyLogin,
+	LazyHeroesPage,
+	LazyHeroPage,
+	LazyLocationsPage,
+	LazyLocationPage,
+	LazyEpisodesPage,
+	LazyEpisodePage,
+	LazyNotFoundPage,
+} from '../pages/lazyPages';
+
+import { publicRoute } from '../constants';
 
 export const AppRouter = () => {
 	return (
 		<Routes>
 			<Route path={publicRoute.home} element={<MainLayout />}>
-				<Route index element={<HomePage />} />
-				<Route path={publicRoute.login} element={<Login />} />
+				<Route index element={<LazyHomePage />} />
+				<Route path={publicRoute.login} element={<LazyLogin />} />
 
 				<Route
 					path={publicRoute.heroes}
 					element={
 						<PrivateRoute>
-							<HeroesPage />
+							<LazyHeroesPage />
 						</PrivateRoute>
 					}
 				/>
@@ -33,7 +34,7 @@ export const AppRouter = () => {
 					path={`${publicRoute.heroes}/:id`}
 					element={
 						<PrivateRoute>
-							<HeroPage />
+							<LazyHeroPage />
 						</PrivateRoute>
 					}
 				/>
@@ -42,7 +43,7 @@ export const AppRouter = () => {
 					path={publicRoute.locations}
 					element={
 						<PrivateRoute>
-							<LocationsPage />
+							<LazyLocationsPage />
 						</PrivateRoute>
 					}
 				/>
@@ -50,7 +51,7 @@ export const AppRouter = () => {
 					path={`${publicRoute.locations}/:id`}
 					element={
 						<PrivateRoute>
-							<LocationPage />
+							<LazyLocationPage />
 						</PrivateRoute>
 					}
 				/>
@@ -59,7 +60,7 @@ export const AppRouter = () => {
 					path={publicRoute.episodes}
 					element={
 						<PrivateRoute>
-							<EpisodesPage />
+							<LazyEpisodesPage />
 						</PrivateRoute>
 					}
 				/>
@@ -67,12 +68,12 @@ export const AppRouter = () => {
 					path={`${publicRoute.episodes}/:id`}
 					element={
 						<PrivateRoute>
-							<EpisodePage />
+							<LazyEpisodePage />
 						</PrivateRoute>
 					}
 				/>
 
-				<Route path='*' element={<NotFoundPage />} />
+				<Route path='*' element={<LazyNotFoundPage />} />
 			</Route>
 		</Routes>
 	);
