@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { HeroCard } from './components';
-import { useSortParams } from '../../hooks';
+import { useRickAndMortyData, useSortParams } from '../../hooks';
 import { SortPanel } from '../../components/SortPanel';
 interface Hero {
 	id: number;
@@ -14,24 +14,33 @@ interface Hero {
 }
 
 export const HeroesPage = () => {
-	const [heroes, setHeroes] = useState<Hero[]>([]);
 	const { sortOrder, setSortOrder } = useSortParams();
+	const [pageNumber, setPageNumber] = useState(1);
 
-	useEffect(() => {
-		const fetchHeroes = async () => {
-			try {
-				const response = await fetch('http://localhost:3000/characters');
-				const data = await response.json();
-				setHeroes(data);
-			} catch (error) {
-				console.error('Error fetching heroes:', error);
+	const { loading, error, data, hasMore } = useRickAndMortyData<Hero>('character', pageNumber);
+
+	const observer = useRef<IntersectionObserver | null>(null);
+	const lastNodeRef = useCallback(
+		(node: HTMLDivElement) => {
+			if (loading) return;
+			if (observer.current) observer.current.disconnect();
+
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting && hasMore) {
+					console.log('Visible');
+
+					setPageNumber((prevPageNumber) => prevPageNumber + 1);
+				}
+			});
+
+			if (node) {
+				observer.current.observe(node);
 			}
-		};
+		},
+		[hasMore, loading]
+	);
 
-		fetchHeroes();
-	}, []);
-
-	const sortedHeroes = [...heroes].sort((a, b) => {
+	const sortedHeroes = [...data].sort((a, b) => {
 		const dateA = new Date(a.created).getTime();
 		const dateB = new Date(b.created).getTime();
 		return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
@@ -43,9 +52,23 @@ export const HeroesPage = () => {
 			<SortPanel label='Сортировать по дате создания' sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
 			<div className='grid-content'>
-				{sortedHeroes.map((hero) => (
-					<HeroCard key={hero.id} id={hero.id} name={hero.name} image={hero.image} />
-				))}
+				{sortedHeroes.map((hero, index) => {
+					if (index === sortedHeroes.length - 5) {
+						return (
+							<HeroCard
+								ref={lastNodeRef}
+								key={hero.id}
+								id={hero.id}
+								name={hero.name}
+								image={hero.image}
+							/>
+						);
+					}
+
+					return <HeroCard key={hero.id} id={hero.id} name={hero.name} image={hero.image} />;
+				})}
+				{loading && <p>Загрузка...</p>}
+				{error && <p>Ошибка...</p>}
 			</div>
 		</div>
 	);

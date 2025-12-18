@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
 import { publicRoute } from '../../../../constants';
 import style from './HeroCard.module.css';
+import { forwardRef } from 'react';
+import { Link } from 'react-router-dom';
 
 type HeroCardProps = {
 	id: number;
@@ -8,9 +9,9 @@ type HeroCardProps = {
 	image: string;
 };
 
-export const HeroCard = ({ id, name, image }: HeroCardProps) => {
+export const HeroCard = forwardRef<HTMLDivElement, HeroCardProps>(({ id, name, image }, ref) => {
 	return (
-		<div className={style.container}>
+		<div ref={ref} className={style.container}>
 			<Link to={publicRoute.hero(`${id}`)}>
 				<img src={image} alt={name} className={style.heroImage} />
 				<div className={style.heroInfo}>
@@ -19,4 +20,4 @@ export const HeroCard = ({ id, name, image }: HeroCardProps) => {
 			</Link>
 		</div>
 	);
-};
+});
