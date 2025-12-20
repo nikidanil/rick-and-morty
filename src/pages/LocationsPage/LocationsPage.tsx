@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { LocationCard } from './components';
-import { useSortParams } from '../../hooks';
+import { useRickAndMortyData, useSortParams } from '../../hooks';
 import { SortPanel } from '../../components/SortPanel';
 
 interface Location {
@@ -12,24 +12,32 @@ interface Location {
 }
 
 export const LocationsPage = () => {
-	const [locations, setLocations] = useState<Location[]>([]);
 	const { sortOrder, setSortOrder } = useSortParams();
 
-	useEffect(() => {
-		const fetchHeroes = async () => {
-			try {
-				const response = await fetch('http://localhost:3000/locations');
-				const data = await response.json();
-				setLocations(data);
-			} catch (error) {
-				console.error('Error fetching heroes:', error);
+	const { loading, error, data, hasMore, loadNext } = useRickAndMortyData<Location>('location', sortOrder);
+
+	const observer = useRef<IntersectionObserver | null>(null);
+	const lastNodeRef = useCallback(
+		(node: HTMLDivElement) => {
+			if (loading) return;
+			if (observer.current) observer.current.disconnect();
+
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting && hasMore) {
+					console.log('Visible');
+
+					loadNext();
+				}
+			});
+
+			if (node) {
+				observer.current.observe(node);
 			}
-		};
+		},
+		[hasMore, loadNext, loading]
+	);
 
-		fetchHeroes();
-	}, []);
-
-	const sortedLocations = [...locations].sort((a, b) => {
+	const sortedLocations = [...data].sort((a, b) => {
 		const dateA = new Date(a.created).getTime();
 		const dateB = new Date(b.created).getTime();
 		return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
@@ -41,9 +49,17 @@ export const LocationsPage = () => {
 			<SortPanel label='Сортировать по дате создания' sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
 			<div className='grid-content'>
-				{sortedLocations.map((location) => (
-					<LocationCard key={location.id} id={location.id} name={location.name} />
-				))}
+				{sortedLocations.map((location, index) => {
+					if (index === sortedLocations.length - 5) {
+						return (
+							<LocationCard ref={lastNodeRef} key={location.id} id={location.id} name={location.name} />
+						);
+					}
+
+					return <LocationCard key={location.id} id={location.id} name={location.name} />;
+				})}
+				{loading && <p>Загрузка...</p>}
+				{error && <p>Ошибка...</p>}
 			</div>
 		</>
 	);
