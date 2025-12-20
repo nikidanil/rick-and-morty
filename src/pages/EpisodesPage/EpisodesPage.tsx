@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
 import { EpisodeCard } from './components';
-import { useSortParams } from '../../hooks';
+import { useRickAndMortyData, useSortParams } from '../../hooks';
 import { SortPanel } from '../../components/SortPanel';
+import { useCallback, useRef } from 'react';
 
 interface Episode {
 	id: number;
@@ -12,24 +12,32 @@ interface Episode {
 }
 
 export const EpisodesPage = () => {
-	const [episodes, setEpisodes] = useState<Episode[]>([]);
 	const { sortOrder, setSortOrder } = useSortParams();
 
-	useEffect(() => {
-		const fetchHeroes = async () => {
-			try {
-				const response = await fetch('http://localhost:3000/episodes');
-				const data = await response.json();
-				setEpisodes(data);
-			} catch (error) {
-				console.error('Error fetching heroes:', error);
+	const { loading, error, data, hasMore, loadNext } = useRickAndMortyData<Episode>('episode', sortOrder);
+
+	const observer = useRef<IntersectionObserver | null>(null);
+	const lastNodeRef = useCallback(
+		(node: HTMLDivElement) => {
+			if (loading) return;
+			if (observer.current) observer.current.disconnect();
+
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting && hasMore) {
+					console.log('Visible');
+
+					loadNext();
+				}
+			});
+
+			if (node) {
+				observer.current.observe(node);
 			}
-		};
+		},
+		[hasMore, loadNext, loading]
+	);
 
-		fetchHeroes();
-	}, []);
-
-	const sortedEpisodes = [...episodes].sort((a, b) => {
+	const sortedEpisodes = [...data].sort((a, b) => {
 		const dateA = new Date(a.created).getTime();
 		const dateB = new Date(b.created).getTime();
 		return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
@@ -41,9 +49,17 @@ export const EpisodesPage = () => {
 			<SortPanel label='Сортировать по дате создания' sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
 			<div className='grid-content'>
-				{sortedEpisodes.map((ep) => (
-					<EpisodeCard key={ep.id} id={ep.id} episode={ep.episode} />
-				))}
+				{sortedEpisodes.map((episode, index) => {
+					if (index === sortedEpisodes.length - 5) {
+						return (
+							<EpisodeCard ref={lastNodeRef} key={episode.id} id={episode.id} episode={episode.episode} />
+						);
+					}
+
+					return <EpisodeCard key={episode.id} id={episode.id} episode={episode.episode} />;
+				})}
+				{loading && <p>Загрузка...</p>}
+				{error && <p>Ошибка...</p>}
 			</div>
 		</div>
 	);

@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 import { publicRoute } from '../../../../constants';
 import style from './EpisodeCard.module.css';
+import { forwardRef } from 'react';
 
 type EpisodeCardProps = {
 	id: number;
 	episode: string;
 };
 
-export const EpisodeCard = ({ id, episode }: EpisodeCardProps) => {
+export const EpisodeCard = forwardRef<HTMLDivElement, EpisodeCardProps>(({ id, episode }, ref) => {
 	return (
-		<div className={style.container}>
+		<div ref={ref} className={style.container}>
 			<Link to={publicRoute.episode(`${id}`)}>
 				<div className={style.episodeInfo}>
 					<h3>{episode}</h3>
@@ -17,4 +18,4 @@ export const EpisodeCard = ({ id, episode }: EpisodeCardProps) => {
 			</Link>
 		</div>
 	);
-};
+});
