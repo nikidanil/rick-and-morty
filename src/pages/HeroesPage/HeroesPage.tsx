@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { HeroCard } from './components';
 import { useRickAndMortyData, useSortParams } from '../../hooks';
 import { SortPanel } from '../../components/SortPanel';
@@ -15,9 +15,8 @@ interface Hero {
 
 export const HeroesPage = () => {
 	const { sortOrder, setSortOrder } = useSortParams();
-	const [pageNumber, setPageNumber] = useState(1);
 
-	const { loading, error, data, hasMore } = useRickAndMortyData<Hero>('character', pageNumber);
+	const { loading, error, data, hasMore, loadNext } = useRickAndMortyData<Hero>('character', sortOrder);
 
 	const observer = useRef<IntersectionObserver | null>(null);
 	const lastNodeRef = useCallback(
@@ -29,7 +28,7 @@ export const HeroesPage = () => {
 				if (entries[0].isIntersecting && hasMore) {
 					console.log('Visible');
 
-					setPageNumber((prevPageNumber) => prevPageNumber + 1);
+					loadNext();
 				}
 			});
 
@@ -37,7 +36,7 @@ export const HeroesPage = () => {
 				observer.current.observe(node);
 			}
 		},
-		[hasMore, loading]
+		[hasMore, loadNext, loading]
 	);
 
 	const sortedHeroes = [...data].sort((a, b) => {
