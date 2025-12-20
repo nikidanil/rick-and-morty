@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { InfoCard, PhotoCard } from '../../components/common';
+import { BASE_WEB_URL } from '../../constants';
 
 interface Hero {
 	id: number;
@@ -20,7 +21,7 @@ export const HeroPage = () => {
 	useEffect(() => {
 		const fetchHeroData = async () => {
 			try {
-				const response = await fetch(`http://localhost:3000/characters/${id}`);
+				const response = await fetch(`${BASE_WEB_URL}/character/${id}`);
 				const data = await response.json();
 				setHeroData(data);
 			} catch (error) {

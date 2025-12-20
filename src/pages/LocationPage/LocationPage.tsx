@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { InfoCard } from '../../components/common';
+import { BASE_WEB_URL } from '../../constants';
 
 interface Location {
 	id: number;
@@ -17,7 +18,7 @@ export const LocationPage = () => {
 	useEffect(() => {
 		const fetchLocationData = async () => {
 			try {
-				const response = await fetch(`http://localhost:3000/locations/${id}`);
+				const response = await fetch(`${BASE_WEB_URL}/location/${id}`);
 				const data = await response.json();
 				setLocationData(data);
 			} catch (error) {

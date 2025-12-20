@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { InfoCard } from '../../components/common';
+import { BASE_WEB_URL } from '../../constants';
 
 interface Episode {
 	id: number;
@@ -17,7 +18,7 @@ export const EpisodePage = () => {
 	useEffect(() => {
 		const fetchEpisodeData = async () => {
 			try {
-				const response = await fetch(`http://localhost:3000/episodes/${id}`);
+				const response = await fetch(`${BASE_WEB_URL}/episode/${id}`);
 				const data = await response.json();
 				setEpisodeData(data);
 			} catch (error) {
