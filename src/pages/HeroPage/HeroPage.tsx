@@ -1,51 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { InfoCard, PhotoCard } from '../../components/common';
-import { BASE_WEB_URL } from '../../constants';
-
-interface Hero {
-	id: number;
-	name: string;
-	status: string;
-	species: string;
-	type: string;
-	gender: string;
-	image: string;
-	created: string;
-}
+import { useHeroDataById } from '@/entities/hero';
+import { InfoCard, PhotoCard } from '@/shared/ui';
 
 export const HeroPage = () => {
-	const [heroData, setHeroData] = useState<Hero | null>(null);
-	const { id } = useParams();
-
-	useEffect(() => {
-		const fetchHeroData = async () => {
-			try {
-				const response = await fetch(`${BASE_WEB_URL}/character/${id}`);
-				const data = await response.json();
-				setHeroData(data);
-			} catch (error) {
-				console.error('Error fetching hero:', error);
-			}
-		};
-
-		fetchHeroData();
-	}, [id]);
+	const data = useHeroDataById();
 
 	return (
 		<>
-			<h1>{heroData?.name}</h1>
+			<h1>{data?.name}</h1>
 
 			<div className='info-content'>
-				{heroData && <PhotoCard src={heroData.image} alt={heroData.name} />}
+				{data && <PhotoCard src={data.image} alt={data.name} />}
 
 				<InfoCard
 					title='Информация о персонаже'
 					infoValues={[
-						['Статус', heroData?.status],
-						['Вид', heroData?.species],
-						['Тип', heroData?.type],
-						['Гендер', heroData?.gender],
+						['Статус', data?.status],
+						['Вид', data?.species],
+						['Тип', data?.type],
+						['Гендер', data?.gender],
 					]}
 				/>
 			</div>

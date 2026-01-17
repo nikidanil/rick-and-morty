@@ -1,14 +1,7 @@
 import { Link } from 'react-router-dom';
-import { publicRoute } from '../../constants';
+import { publicRoute } from '@/shared/constants';
 import style from './HomePage.module.css';
 
-/**
- * Компонент главной страницы приложения.
- *
- * Отображает приветствие и краткий гайд по навигации по сайту в стиле "Рик и Морти".
- *
- * @returns {JSX.Element} Структурированная главная страница с приветствием и навигационными ссылками.
- */
 export const HomePage = () => {
 	return (
 		<div className={style.homeContainer}>
