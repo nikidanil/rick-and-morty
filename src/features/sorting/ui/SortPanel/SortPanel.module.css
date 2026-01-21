@@ -1,11 +1,7 @@
 .controls {
-	margin-bottom: 1rem;
-	text-align: center;
-}
-
-.select {
-	padding: 8px 12px;
-	font-size: 1rem;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+	display: flex;
+	justify-content: center; /* центрирует по горизонтали */
+	align-items: center; /* центрирует по вертикали */
+	gap: 8px; /* расстояние между лейблом и селектом */
+	margin: 1rem 0;
 }

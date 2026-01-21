@@ -1,5 +1,6 @@
 import type { SortOrder } from '@/shared/types';
 import style from './SortPanel.module.css';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
 
 type SortPanelProps = {
 	label: string;
@@ -8,22 +9,24 @@ type SortPanelProps = {
 };
 
 export const SortPanel = ({ label, sortOrder, setSortOrder }: SortPanelProps) => {
-	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		const value = event.target.value;
-		if (value === 'asc' || value === 'desc') {
-			setSortOrder(value);
-		}
+	const handleChange = (value: SortOrder) => {
+		setSortOrder(value);
 	};
 
 	return (
 		<div className={style.controls}>
-			<label>
-				{label}: &nbsp;
-				<select value={sortOrder} onChange={handleChange} className={style.select}>
-					<option value='desc'>Сначала новые</option>
-					<option value='asc'>Сначала старые</option>
-				</select>
-			</label>
+			<label>{label}: &nbsp;</label>
+			<Select value={sortOrder} onValueChange={handleChange}>
+				<SelectTrigger className='w-45'>
+					<SelectValue placeholder='Выберите сортировку' />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectGroup>
+						<SelectItem value='desc'>Сначала новые</SelectItem>
+						<SelectItem value='asc'>Сначала старые</SelectItem>
+					</SelectGroup>
+				</SelectContent>
+			</Select>
 		</div>
 	);
 };
